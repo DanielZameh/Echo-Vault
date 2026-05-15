@@ -1,0 +1,1624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EchoVault - Your Data. Your Rules. Finally Private.</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Calistoga&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Design System: Root Variables */
+        :root {
+            --background: #FAFAFA;
+            --foreground: #0F172A;
+            --muted: #F1F5F9;
+            --muted-foreground: #64748B;
+            --accent: #0052FF;
+            --accent-secondary: #4D7CFF;
+            --accent-foreground: #FFFFFF;
+            --border: #E2E8F0;
+            --card: #FFFFFF;
+            --ring: #0052FF;
+        }
+
+        /* Font Families */
+        * {
+            font-family: 'Inter', system-ui, sans-serif;
+        }
+
+        h1, h2, h3.headline {
+            font-family: 'Calistoga', Georgia, serif;
+        }
+
+        .font-mono-label {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Gradient Text Effect */
+        .gradient-text {
+            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            color: transparent;
+        }
+
+        /* Gradient Underline */
+        .gradient-underline {
+            position: absolute;
+            bottom: -0.5rem;
+            left: 0;
+            height: 1rem;
+            border-radius: 0.125rem;
+            background: linear-gradient(to right, rgba(0, 82, 255, 0.15), rgba(77, 124, 255, 0.1));
+        }
+
+        /* Primary Gradient Background */
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+        }
+
+        /* Accent Tinted Shadow */
+        .shadow-accent {
+            box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+        }
+
+        .shadow-accent-lg {
+            box-shadow: 0 8px 24px rgba(0, 82, 255, 0.35);
+        }
+
+        /* Dot Pattern Texture */
+        .dot-pattern {
+            background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 32px 32px;
+        }
+
+        /* Radial Glow Effect */
+        .radial-glow {
+            position: relative;
+        }
+
+        .radial-glow::before {
+            content: '';
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0, 82, 255, 0.06), transparent 70%);
+            filter: blur(150px);
+            pointer-events: none;
+        }
+
+        /* Animations */
+        @keyframes rotate-ring {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        @keyframes float-up-down {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes float-up-down-2 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { 
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% { 
+                transform: scale(1.3);
+                opacity: 0.6;
+            }
+        }
+
+        @keyframes fade-in-up {
+            from {
+                opacity: 0;
+                transform: translateY(28px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes count-up {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .animate-rotate-ring {
+            animation: rotate-ring 60s linear infinite;
+        }
+
+        .animate-float-1 {
+            animation: float-up-down 5s ease-in-out infinite;
+        }
+
+        .animate-float-2 {
+            animation: float-up-down-2 4s ease-in-out infinite;
+        }
+
+        .animate-pulse-dot {
+            animation: pulse-dot 2s infinite;
+        }
+
+        .animate-fade-in-up {
+            animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Stagger animation delays */
+        .stagger-1 { animation-delay: 0.1s; opacity: 0; }
+        .stagger-2 { animation-delay: 0.2s; opacity: 0; }
+        .stagger-3 { animation-delay: 0.3s; opacity: 0; }
+        .stagger-4 { animation-delay: 0.4s; opacity: 0; }
+        .stagger-5 { animation-delay: 0.5s; opacity: 0; }
+
+        .animate-in {
+            animation: fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        /* Gradient Border Effect */
+        .gradient-border {
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            padding: 2px;
+            border-radius: 12px;
+        }
+
+        .gradient-border > * {
+            border-radius: calc(12px - 2px);
+        }
+
+        /* Mobile Menu */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .mobile-menu.active {
+            max-height: 500px;
+        }
+
+        /* Section Label Badge */
+        .section-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(0, 82, 255, 0.3);
+            background: rgba(0, 82, 255, 0.05);
+            padding: 0.5rem 1.25rem;
+        }
+
+        .section-label-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent);
+        }
+
+        .section-label-text {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 12px;
+            font-weight: 400;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        /* Button Styles */
+        .btn-primary {
+            background: linear-gradient(to right, var(--accent), var(--accent-secondary));
+            color: white;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.2s ease-out;
+            border: none;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 8px 24px rgba(0, 82, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        .btn-primary:active {
+            transform: scale(0.98);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            border-radius: 12px;
+            transition: all 0.2s ease-out;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(0, 82, 255, 0.3);
+            background: var(--muted);
+        }
+
+        /* Card Styles */
+        .card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease-out;
+        }
+
+        .card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-2px);
+        }
+
+        /* Input Styles */
+        .input-field {
+            height: 3rem;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 0 1rem;
+            background: transparent;
+            font-size: 1rem;
+            transition: all 0.2s ease-out;
+        }
+
+        .input-field:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1), 0 0 0 1px var(--accent);
+            border-color: var(--accent);
+        }
+
+        .input-field::placeholder {
+            color: rgba(100, 116, 139, 0.5);
+        }
+
+        /* Timeline Styles */
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 16px;
+            top: 0;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid var(--accent);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .timeline-number {
+            position: absolute;
+            left: 24px;
+            top: 8px;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        .timeline-connector {
+            position: absolute;
+            left: 35px;
+            top: 42px;
+            width: 18px;
+            height: 2px;
+            background: var(--accent);
+            border-radius: 1px;
+        }
+
+        /* Feature Icon */
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 28px;
+        }
+
+        /* Testimonial Card */
+        .testimonial-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease-out;
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            border-radius: 16px 0 0 16px;
+            background: linear-gradient(to bottom, var(--accent), var(--accent-secondary));
+        }
+
+        .testimonial-card:hover {
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+            transform: translateY(-4px);
+        }
+
+        /* Pricing Card */
+        .pricing-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2rem;
+            transition: all 0.3s ease-out;
+        }
+
+        .pricing-card.featured {
+            position: relative;
+            z-index: 10;
+            transform: translateY(-20px);
+            box-shadow: 0 20px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .pricing-card.featured::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 16px;
+            padding: 2px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            pointer-events: none;
+        }
+
+        .pricing-card.featured > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        .pricing-card.featured:hover {
+            transform: translateY(-24px);
+        }
+
+        /* Icon Colors for Features */
+        .icon-lock { color: white; }
+        .icon-share { color: white; }
+        .icon-shield { color: white; }
+        .icon-zk { color: white; }
+        .icon-speed { color: white; }
+        .icon-control { color: white; }
+
+        /* Dark Section Inverted */
+        .section-dark {
+            background: var(--foreground);
+            color: white;
+        }
+
+        .section-dark a {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .section-dark a:hover {
+            color: white;
+        }
+
+        /* Toggle Switch for Demo */
+        .toggle-switch {
+            position: relative;
+            width: 50px;
+            height: 28px;
+            background: var(--muted);
+            border-radius: 14px;
+            cursor: pointer;
+            transition: background 0.3s ease-out;
+            border: none;
+        }
+
+        .toggle-switch.active {
+            background: var(--accent);
+        }
+
+        .toggle-switch::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: left 0.3s ease-out;
+        }
+
+        .toggle-switch.active::after {
+            left: 24px;
+        }
+
+        /* Data Field Blur Effect */
+        .data-field {
+            padding: 1rem;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            background: var(--muted);
+            transition: all 0.3s ease-out;
+        }
+
+        .data-field.blurred {
+            filter: blur(8px);
+            opacity: 0.5;
+        }
+
+        /* Responsive: Hide Elements */
+        @media (max-width: 768px) {
+            .gradient-border {
+                padding: 1px;
+            }
+
+            .gradient-border > * {
+                border-radius: calc(12px - 1px);
+            }
+        }
+
+        /* Accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            * {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        /* Hero Graphic Container */
+        .hero-graphic {
+            position: relative;
+            width: 100%;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-graphic-ring {
+            position: absolute;
+            width: 280px;
+            height: 280px;
+            border: 2px dashed rgba(0, 82, 255, 0.3);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-graphic-card {
+            position: absolute;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+        }
+
+        .hero-graphic-shape {
+            position: absolute;
+            border-radius: 50%;
+        }
+
+        .hero-graphic-lock {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            box-shadow: 0 4px 14px rgba(0, 82, 255, 0.25);
+        }
+
+        /* Stats Counter */
+        .stat-counter {
+            font-size: 2.25rem;
+            font-weight: 700;
+            color: var(--accent);
+        }
+
+        /* Focus Styles for Accessibility */
+        button:focus, a:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(0, 82, 255, 0.1), 0 0 0 2px var(--accent);
+        }
+
+        /* Blur transition for demo */
+        .blur-transition {
+            transition: filter 0.3s ease-out, opacity 0.3s ease-out;
+        }
+    </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)]">
+
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 bg-[var(--background)]/95 backdrop-blur-sm border-b border-[var(--border)]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-lg gradient-bg flex items-center justify-center text-white font-bold text-lg">
+                        EV
+                    </div>
+                    <span class="font-semibold text-lg hidden sm:inline">EchoVault</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#how-it-works" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">How It Works</a>
+                    <a href="#features" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Features</a>
+                    <a href="#pricing" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Pricing</a>
+                    <a href="#testimonials" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Testimonials</a>
+                </div>
+
+                <!-- CTA Button -->
+                <button class="btn-primary hidden sm:flex h-12" onclick="document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })">
+                    Launch on Midnight
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 hover:bg-[var(--muted)] rounded-lg transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden mt-4 pb-4 border-t border-[var(--border)] pt-4">
+                <a href="#how-it-works" class="block py-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">How It Works</a>
+                <a href="#features" class="block py-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Features</a>
+                <a href="#pricing" class="block py-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Pricing</a>
+                <a href="#testimonials" class="block py-2 text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Testimonials</a>
+                <button class="btn-primary w-full mt-4 h-12" onclick="document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })">
+                    Launch on Midnight
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="py-20 sm:py-32 lg:py-44 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Decorative Glow -->
+            <div class="absolute -top-40 -right-40 w-80 h-80 rounded-full blur-3xl bg-[var(--accent)] opacity-5"></div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-center relative z-10">
+                <!-- Left Column: Text -->
+                <div class="animate-fade-in-up">
+                    <h1 class="text-[2.75rem] sm:text-5xl lg:text-[5.25rem] font-bold leading-tight lg:leading-[1.05] mb-6 lg:mb-8">
+                        Own Your Data <span class="gradient-text">Again</span>
+                    </h1>
+                    
+                    <p class="text-lg lg:text-xl text-[var(--muted-foreground)] mb-8 lg:mb-10 max-w-lg leading-relaxed">
+                        Take back control with cryptographically-secured, zero-knowledge proof sharing. Your personal data lives where it should—with you. Built on Midnight blockchain.
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button class="btn-primary h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg" onclick="document.getElementById('cta-section').scrollIntoView({ behavior: 'smooth' })">
+                            Get Started Free
+                            <svg class="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                            </svg>
+                        </button>
+                        <button class="btn-secondary h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg">
+                            Watch Demo
+                            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M8 5v14l11-7z" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Trust Badges -->
+                    <div class="mt-12 lg:mt-16 pt-8 lg:pt-12 border-t border-[var(--border)] flex flex-col gap-6">
+                        <p class="text-sm font-mono-label text-[var(--muted-foreground)] uppercase tracking-[0.1em]">Trusted by Privacy-First Teams</p>
+                        <div class="flex flex-wrap gap-4 items-center">
+                            <div class="text-sm font-semibold">Built on <span class="gradient-text">Midnight</span></div>
+                            <div class="h-6 w-px bg-[var(--border)]"></div>
+                            <div class="text-sm font-semibold">Zero-Knowledge Proofs</div>
+                            <div class="h-6 w-px bg-[var(--border)]"></div>
+                            <div class="text-sm font-semibold">Cryptographically Secure</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Hero Graphic -->
+                <div class="relative h-96 sm:h-[450px] hidden lg:flex items-center justify-center">
+                    <!-- Main Rotating Ring -->
+                    <svg class="absolute w-80 h-80 animate-rotate-ring" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="200" cy="200" r="190" fill="none" stroke="rgba(0, 82, 255, 0.2)" stroke-width="2" stroke-dasharray="8 4" />
+                    </svg>
+
+                    <!-- Shield Icon (Center) -->
+                    <div class="absolute animate-float-1">
+                        <div class="w-24 h-24 rounded-2xl gradient-bg flex items-center justify-center text-white shadow-accent-lg">
+                            <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 1L3 5v6c0 5.55 3.6 10.74 9 12 5.4-1.26 9-6.45 9-12V5l-9-4z" />
+                            </svg>
+                        </div>
+                    </div>
+
+                    <!-- Floating Card 1 - Top Left -->
+                    <div class="absolute -top-6 -left-8 animate-float-2" style="animation-delay: 0.2s">
+                        <div class="bg-white rounded-xl border border-[var(--border)] shadow-md p-4 w-40">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-[var(--accent)] animate-pulse-dot"></div>
+                                <span class="text-xs font-semibold text-[var(--muted-foreground)]">Data Encrypted</span>
+                            </div>
+                            <div class="text-xs text-[var(--muted-foreground)]">Your files stay encrypted at rest</div>
+                        </div>
+                    </div>
+
+                    <!-- Floating Card 2 - Bottom Right -->
+                    <div class="absolute -bottom-8 right-0 animate-float-1" style="animation-delay: 0.5s">
+                        <div class="bg-white rounded-xl border border-[var(--border)] shadow-md p-4 w-40">
+                            <div class="flex items-center gap-2 mb-2">
+                                <div class="w-3 h-3 rounded-full bg-[var(--accent)] animate-pulse-dot"></div>
+                                <span class="text-xs font-semibold text-[var(--muted-foreground)]">Proof Generated</span>
+                            </div>
+                            <div class="text-xs text-[var(--muted-foreground)]">Share without revealing data</div>
+                        </div>
+                    </div>
+
+                    <!-- Geometric Shapes -->
+                    <div class="absolute top-12 right-24 w-32 h-32 rounded-full bg-gradient-to-br from-[var(--accent)] to-[var(--accent-secondary)] opacity-10 blur-3xl"></div>
+                    <div class="absolute bottom-20 left-12 w-48 h-48 rounded-full bg-[var(--accent)] opacity-5 blur-3xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">How It Works</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Three Steps to <span class="gradient-text">Complete Control</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    Privacy doesn't have to be complicated. EchoVault makes reclaiming your data simple, secure, and instant.
+                </p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="max-w-3xl mx-auto relative">
+                <!-- Desktop Timeline Line -->
+                <div class="hidden md:block absolute left-1/2 transform -translate-x-1/2 top-0 bottom-0 w-1 bg-gradient-to-b from-[var(--accent)] to-[var(--accent-secondary)]"></div>
+
+                <!-- Step 1 -->
+                <div class="timeline-item mb-12 lg:mb-20 animate-fade-in-up stagger-1">
+                    <div class="timeline-number">1</div>
+                    <div class="md:max-w-xs">
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3">Connect Your Data</h3>
+                        <p class="text-[var(--muted-foreground)] leading-relaxed">
+                            Link your documents, files, and personal information. Everything is encrypted end-to-end immediately upon upload to your vault.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="timeline-item mb-12 lg:mb-20 animate-fade-in-up stagger-2">
+                    <div class="timeline-number">2</div>
+                    <div class="md:max-w-xs md:ml-auto">
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3">Create Proof</h3>
+                        <p class="text-[var(--muted-foreground)] leading-relaxed">
+                            Generate zero-knowledge proofs to share specific attributes without revealing sensitive information. Prove you meet requirements without exposure.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="timeline-item animate-fade-in-up stagger-3">
+                    <div class="timeline-number">3</div>
+                    <div class="md:max-w-xs">
+                        <h3 class="text-xl lg:text-2xl font-semibold mb-3">Share Selectively</h3>
+                        <p class="text-[var(--muted-foreground)] leading-relaxed">
+                            Share proofs with services or organizations. They verify, you stay private. Complete transparency in what you're sharing.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Key Features Section -->
+    <section id="features" class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Features</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Privacy-First <span class="gradient-text">Technology</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    Built from the ground up with cryptographic protocols that put you in complete control.
+                </p>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Feature 1 -->
+                <div class="card animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 1L3 5v6c0 5.55 3.6 10.74 9 12 5.4-1.26 9-6.45 9-12V5l-9-4z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">End-to-End Encryption</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Military-grade encryption ensures only you can decrypt your data. Even EchoVault can't access your vault.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="card animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Zero-Knowledge Proofs</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Prove facts about your data without revealing the data itself. Cryptographically verified privacy.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="card animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Selective Sharing</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Choose exactly which fields to share with each recipient. Fine-grained control at your fingertips.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="card animate-fade-in-up stagger-4" style="animation-delay: 0.4s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 1C6.48 1 2 5.48 2 11s4.48 10 10 10 10-4.48 10-10S17.52 1 12 1zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 7 15.5 7 14 7.67 14 8.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 7 8.5 7 7 7.67 7 8.5 7.67 10 8.5 10zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Decentralized</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Built on Midnight blockchain. No central authority. Your data belongs to you, permanently.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="card animate-fade-in-up stagger-5" style="animation-delay: 0.5s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M11.99 5V1h-1v4H8.97V1h-1v4H5.99V1h-1v4H2v1h20V1h-1v4h-3V1h-1v4h-3V1zm-5 8h12V7H6.99v6zm0 7h12v-6H6.99v6z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">Instant Audit Trail</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Immutable record of every access. Know exactly who accessed what and when. Perfect transparency.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="card animate-fade-in-up stagger-1" style="animation-delay: 0.6s;">
+                    <div class="feature-icon mb-4">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M16.6915026,12.4744748 L3.50612381,13.2599618 C3.19218622,13.2599618 3.03521743,13.4170592 3.03521743,13.5741566 L1.15159189,20.0151496 C0.8376543,20.8006365 0.99,21.89 1.77946707,22.52 C2.41,22.99 3.50612381,23.1 4.13399899,22.8429026 L21.714504,14.0454487 C22.6563168,13.5741566 23.1272231,12.6315722 22.9702544,11.6889879 L4.13399899,1.16112619 C3.34915502,0.9040289 2.40734225,0.9040289 1.77946707,1.4753211 C0.994623095,2.0466133 0.837654326,3.1360127 1.15159189,3.9215017 L3.03521743,10.3624947 C3.03521743,10.5195921 3.19218622,10.6766894 3.50612381,10.6766894 L16.6915026,11.4621763 C16.6915026,11.4621763 17.1624089,11.4621763 17.1624089,12.0334685 C17.1624089,12.4744748 16.6915026,12.4744748 16.6915026,12.4744748 Z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-semibold mb-2">One-Click Sharing</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm leading-relaxed">
+                        Generate shareable proofs in seconds. No complicated setup. Privacy should be easy.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Midnight Section -->
+    <section class="py-24 sm:py-32 lg:py-44 section-dark dot-pattern relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Decorative Glow -->
+            <div class="absolute -top-40 -left-40 w-80 h-80 rounded-full blur-3xl bg-[var(--accent)] opacity-10"></div>
+
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label" style="background: rgba(0, 82, 255, 0.1); border-color: rgba(255, 255, 255, 0.2);">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Built on Midnight</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Why <span style="background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Midnight</span>
+                </h2>
+                <p class="text-lg text-white/70 max-w-2xl mx-auto">
+                    Midnight is the privacy-focused blockchain designed for real-world applications. Perfect foundation for EchoVault's cryptographic operations.
+                </p>
+            </div>
+
+            <!-- Midnight Features -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+                <!-- Midnight Feature 1 -->
+                <div class="rounded-xl border border-white/10 p-6 lg:p-8 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <div class="text-3xl font-bold gradient-text mb-3">Privacy-Native</div>
+                    <p class="text-white/70">
+                        Midnight's architecture is built from the ground up for privacy. Zero-knowledge proofs are first-class primitives, not afterthoughts.
+                    </p>
+                </div>
+
+                <!-- Midnight Feature 2 -->
+                <div class="rounded-xl border border-white/10 p-6 lg:p-8 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="text-3xl font-bold gradient-text mb-3">Proven Security</div>
+                    <p class="text-white/70">
+                        Battle-tested cryptography by leading researchers. Formal verification ensures correctness of all zero-knowledge protocols.
+                    </p>
+                </div>
+
+                <!-- Midnight Feature 3 -->
+                <div class="rounded-xl border border-white/10 p-6 lg:p-8 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-all duration-300 animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <div class="text-3xl font-bold gradient-text mb-3">Real Applications</div>
+                    <p class="text-white/70">
+                        Midnight supports complex smart contracts while maintaining privacy. Scalable solutions for enterprise-grade needs.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Stats Section -->
+    <section class="py-24 sm:py-32 lg:py-44 section-dark dot-pattern relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Decorative Glow -->
+            <div class="absolute -bottom-40 -right-40 w-96 h-96 rounded-full blur-3xl bg-[var(--accent)] opacity-10"></div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Growing Privacy</span> Movement
+                </h2>
+                <p class="text-lg text-white/70 max-w-2xl mx-auto">
+                    Join thousands of users who have taken back control of their personal data.
+                </p>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Stat 1 -->
+                <div class="text-center animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <div class="stat-counter" data-target="12500">0</div>
+                    <p class="text-white/70 mt-2">Active Users</p>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="text-center animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="stat-counter" data-target="847">0</div>
+                    <p class="text-white/70 mt-2">Proofs Generated</p>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="text-center animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <div class="stat-counter" data-target="2.5">0</div>
+                    <p class="text-white/70 mt-2">TB Data Secured</p>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="text-center animate-fade-in-up stagger-4" style="animation-delay: 0.4s;">
+                    <div class="stat-counter" data-target="99.99">0</div>
+                    <p class="text-white/70 mt-2">Uptime %</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Use Cases Section -->
+    <section class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Use Cases</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Privacy That <span class="gradient-text">Works</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    EchoVault serves professionals, businesses, and individuals who refuse to compromise on privacy.
+                </p>
+            </div>
+
+            <!-- Use Cases Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
+                <!-- Use Case 1 -->
+                <div class="card group animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-5-9h10v2H7z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Financial Services</h3>
+                            <p class="text-[var(--muted-foreground)] text-sm">Verify income and credit without exposing full financial records. Compliance with privacy.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Case 2 -->
+                <div class="card group animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Employment</h3>
+                            <p class="text-[var(--muted-foreground)] text-sm">Share educational credentials and background checks without revealing sensitive history.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Case 3 -->
+                <div class="card group animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14zm-5.04-6.71l-2.75 3.54-1.3-1.54c-.3-.36-.77-.36-1.07 0-.3.36-.3.92 0 1.28l1.83 2.17c.3.36.77.36 1.07 0l3.29-4c.3-.36.3-.92 0-1.28-.3-.36-.77-.36-1.07 0z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Healthcare</h3>
+                            <p class="text-[var(--muted-foreground)] text-sm">Prove medical certifications while keeping detailed health records completely private.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Use Case 4 -->
+                <div class="card group animate-fade-in-up stagger-4" style="animation-delay: 0.4s;">
+                    <div class="flex items-start gap-4">
+                        <div class="w-12 h-12 rounded-lg gradient-bg flex items-center justify-center text-white flex-shrink-0 group-hover:scale-110 transition-transform">
+                            <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M11.99 5V1h-1v4H8.97V1h-1v4H5.99V1h-1v4H2v1h20V1h-1v4h-3V1h-1v4h-3V1zm-5 8h12V7H6.99v6zm0 7h12v-6H6.99v6z" />
+                            </svg>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold mb-2">Government</h3>
+                            <p class="text-[var(--muted-foreground)] text-sm">Age and citizenship verification with zero exposure of personal identification data.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Testimonials</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Users Love <span class="gradient-text">Privacy</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    See what privacy-conscious professionals are saying about taking back control.
+                </p>
+            </div>
+
+            <!-- Testimonials Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 items-center">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#FF6B6B] to-[#FF8E53]"></div>
+                        <div>
+                            <p class="font-semibold text-sm">Sarah Chen</p>
+                            <p class="text-xs text-[var(--muted-foreground)]">Financial Analyst</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[var(--muted-foreground)] leading-relaxed">
+                        "EchoVault completely changed how I think about data sharing. I can finally work with financial institutions without giving them my entire history."
+                    </p>
+                </div>
+
+                <!-- Testimonial 2 (Center - Featured) -->
+                <div class="testimonial-card md:translate-y-8 animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#4F46E5] to-[#7C3AED]"></div>
+                        <div>
+                            <p class="font-semibold text-sm">Marcus Williams</p>
+                            <p class="text-xs text-[var(--muted-foreground)]">Tech Entrepreneur</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[var(--muted-foreground)] leading-relaxed">
+                        "This is what we've been waiting for. True zero-knowledge proof infrastructure that actually works. The privacy revolution starts here."
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-[#10B981] to-[#059669]"></div>
+                        <div>
+                            <p class="font-semibold text-sm">Emma Rodriguez</p>
+                            <p class="text-xs text-[var(--muted-foreground)]">Privacy Lawyer</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-[var(--muted-foreground)] leading-relaxed">
+                        "Finally, a tool that respects both technology and legal requirements. My clients can meet compliance without losing privacy rights."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Demo Section -->
+    <section class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Interactive Demo</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Selective Data <span class="gradient-text">Sharing</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    Try it yourself. Toggle fields to share and see the proof generation in action.
+                </p>
+            </div>
+
+            <!-- Demo Container -->
+            <div class="max-w-3xl mx-auto card">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Data Fields -->
+                    <div>
+                        <h3 class="text-lg font-semibold mb-6">Your Data Vault</h3>
+                        
+                        <!-- Data Field 1 -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-sm font-medium">Full Name</label>
+                                <button class="toggle-switch" onclick="toggleField(this, 'field-name')"></button>
+                            </div>
+                            <div class="data-field blur-transition" id="field-name">
+                                <p class="text-sm font-mono-label">Emma Johnson</p>
+                            </div>
+                        </div>
+
+                        <!-- Data Field 2 -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-sm font-medium">Email</label>
+                                <button class="toggle-switch" onclick="toggleField(this, 'field-email')"></button>
+                            </div>
+                            <div class="data-field blur-transition" id="field-email">
+                                <p class="text-sm font-mono-label">emma.johnson@email.com</p>
+                            </div>
+                        </div>
+
+                        <!-- Data Field 3 -->
+                        <div class="mb-4">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-sm font-medium">Age</label>
+                                <button class="toggle-switch active" onclick="toggleField(this, 'field-age')"></button>
+                            </div>
+                            <div class="data-field blur-transition" id="field-age">
+                                <p class="text-sm font-mono-label">28 years old</p>
+                            </div>
+                        </div>
+
+                        <!-- Data Field 4 -->
+                        <div class="mb-6">
+                            <div class="flex items-center justify-between mb-3">
+                                <label class="text-sm font-medium">Income Range</label>
+                                <button class="toggle-switch active" onclick="toggleField(this, 'field-income')"></button>
+                            </div>
+                            <div class="data-field blur-transition" id="field-income">
+                                <p class="text-sm font-mono-label">$80,000 - $120,000</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Proof Generation -->
+                    <div class="flex flex-col">
+                        <h3 class="text-lg font-semibold mb-6">Generated Proof</h3>
+                        
+                        <div class="flex-1 rounded-lg border-2 border-dashed border-[var(--border)] p-6 flex flex-col items-center justify-center bg-[var(--muted)]/30 min-h-64">
+                            <div id="proof-status" class="text-center">
+                                <div class="w-16 h-16 rounded-full border-4 border-[var(--border)] border-t-[var(--accent)] animate-spin mb-4 mx-auto"></div>
+                                <p class="text-sm text-[var(--muted-foreground)]">Toggle fields to generate proof...</p>
+                            </div>
+                            
+                            <div id="proof-content" class="hidden text-center">
+                                <svg class="w-16 h-16 mx-auto mb-4 text-[var(--accent)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <p class="text-sm font-mono-label text-[var(--muted-foreground)] break-all mb-4" id="proof-hash">
+                                    0x3f8c2a94b1e7d5f...
+                                </p>
+                                <p class="text-xs text-[var(--muted-foreground)] mb-6">
+                                    Zero-knowledge proof generated
+                                </p>
+                                <button class="btn-primary w-full" onclick="shareProof()">
+                                    Share Proof
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Instructions -->
+                        <p class="text-xs text-[var(--muted-foreground)] mt-6 text-center">
+                            Select which fields to include in your proof. The system generates a cryptographic proof without exposing your private data.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-24 sm:py-32 lg:py-44">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Label -->
+            <div class="flex justify-center mb-12 lg:mb-16">
+                <div class="section-label">
+                    <span class="section-label-dot animate-pulse-dot"></span>
+                    <span class="section-label-text">Pricing</span>
+                </div>
+            </div>
+
+            <div class="text-center mb-16 lg:mb-24">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Simple, Transparent <span class="gradient-text">Pricing</span>
+                </h2>
+                <p class="text-lg text-[var(--muted-foreground)] max-w-2xl mx-auto">
+                    Privacy should be affordable. Choose the plan that fits your needs.
+                </p>
+            </div>
+
+            <!-- Pricing Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8 max-w-5xl mx-auto">
+                <!-- Basic Plan -->
+                <div class="pricing-card animate-fade-in-up stagger-1" style="animation-delay: 0.1s;">
+                    <h3 class="text-xl font-semibold mb-2">Starter</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm mb-6">For individuals</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">Free</span>
+                        <span class="text-[var(--muted-foreground)] text-sm ml-2">forever</span>
+                    </div>
+                    <button class="btn-secondary w-full mb-8">Get Started</button>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>1 GB Storage</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Basic ZK Proofs</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>2 Recipients</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pro Plan (Featured) -->
+                <div class="pricing-card featured animate-fade-in-up stagger-2" style="animation-delay: 0.2s;">
+                    <div class="absolute top-4 right-4">
+                        <span class="section-label" style="font-size: 11px; padding: 0.25rem 0.75rem;">
+                            <span class="section-label-dot" style="animation: pulse-dot 2s infinite;"></span>
+                            <span class="section-label-text" style="font-size: 10px;">Most Popular</span>
+                        </span>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-2">Professional</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm mb-6">For teams</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">$9</span>
+                        <span class="text-[var(--muted-foreground)] text-sm ml-2">/month</span>
+                    </div>
+                    <button class="btn-primary w-full mb-8">Start Free Trial</button>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>50 GB Storage</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Advanced ZK Proofs</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Unlimited Recipients</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>API Access</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Enterprise Plan -->
+                <div class="pricing-card animate-fade-in-up stagger-3" style="animation-delay: 0.3s;">
+                    <h3 class="text-xl font-semibold mb-2">Enterprise</h3>
+                    <p class="text-[var(--muted-foreground)] text-sm mb-6">For organizations</p>
+                    <div class="mb-6">
+                        <span class="text-4xl font-bold">Custom</span>
+                    </div>
+                    <button class="btn-secondary w-full mb-8">Contact Sales</button>
+                    <div class="space-y-3 text-sm">
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Unlimited Storage</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Dedicated Support</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>Custom Compliance</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <svg class="w-5 h-5 text-[var(--accent)]" fill="currentColor" viewBox="0 0 20 20">
+                                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                            </svg>
+                            <span>SLA & Security Audit</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section id="cta-section" class="py-24 sm:py-32 lg:py-44 section-dark dot-pattern relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <!-- Decorative Glow -->
+            <div class="absolute -top-40 -left-40 w-96 h-96 rounded-full blur-3xl bg-[var(--accent)] opacity-10"></div>
+
+            <div class="text-center mb-12 lg:mb-16 animate-fade-in-up">
+                <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
+                    Ready to Reclaim <span style="background: linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5)); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">Your Privacy</span>
+                </h2>
+                <p class="text-lg text-white/70 max-w-2xl mx-auto">
+                    Join the privacy revolution. Start free today. No credit card required.
+                </p>
+            </div>
+
+            <!-- Signup Form -->
+            <div class="max-w-md mx-auto animate-fade-in-up stagger-1" style="animation-delay: 0.2s;">
+                <form class="flex flex-col gap-4" onsubmit="handleSignup(event)">
+                    <input 
+                        type="email" 
+                        placeholder="your@email.com" 
+                        class="input-field text-white placeholder-white/30 bg-white/5 border-white/20 focus:border-white/50" 
+                        required
+                    >
+                    <button type="submit" class="btn-primary h-14 text-base w-full">
+                        Launch on Midnight
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                        </svg>
+                    </button>
+                </form>
+                <p class="text-xs text-white/50 text-center mt-4">
+                    We respect your privacy. Your data is never sold or shared.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 lg:py-16 border-t border-[var(--border)]">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <!-- Brand -->
+                <div>
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-8 h-8 rounded-lg gradient-bg flex items-center justify-center text-white font-bold text-sm">
+                            EV
+                        </div>
+                        <span class="font-semibold">EchoVault</span>
+                    </div>
+                    <p class="text-sm text-[var(--muted-foreground)]">
+                        Privacy-first personal data vault built on Midnight. Your data. Your rules. Finally private.
+                    </p>
+                </div>
+
+                <!-- Product Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Product</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Pricing</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Security</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Roadmap</a></li>
+                    </ul>
+                </div>
+
+                <!-- Company Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Company</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">About</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Blog</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Careers</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Links -->
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Privacy</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Terms</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Cookies</a></li>
+                        <li><a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">Status</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Bottom Footer -->
+            <div class="border-t border-[var(--border)] pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+                <p class="text-sm text-[var(--muted-foreground)]">
+                    © 2026 EchoVault. Built with privacy.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M23.953 4.57a10 10 0 002.856-3.51 10.02 10.02 0 01-2.856 1.1 5.01 5.01 0 002.19-2.76 10.05 10.05 0 01-3.169 1.21 5.007 5.007 0 00-8.544 4.56 14.232 14.232 0 01-10.33-5.23 5.01 5.01 0 001.551 6.68 4.98 4.98 0 01-2.27-.616v.061a5.007 5.007 0 004.018 4.908 4.985 4.985 0 01-2.26.086 5.009 5.009 0 004.68 3.476 10.04 10.04 0 01-6.177 2.135c-.402 0-.8-.024-1.19-.074a14.201 14.201 0 007.713 2.261c9.264 0 14.33-7.666 14.33-14.33 0-.218-.005-.435-.014-.653a10.23 10.23 0 002.516-2.625z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-[var(--muted-foreground)] hover:text-[var(--foreground)] transition-colors">
+                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v 3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when link clicked
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('active');
+            });
+        });
+
+        // Scroll animation intersection observer
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in-up');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.animation = `fade-in-up 0.7s cubic-bezier(0.16, 1, 0.3, 1) ${entry.target.style.animationDelay || '0s'} forwards`;
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: '-60px'
+            });
+
+            elements.forEach(el => observer.observe(el));
+        };
+
+        // Counter animation
+        const animateCounters = () => {
+            const counters = document.querySelectorAll('.stat-counter');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const counter = entry.target;
+                        const target = parseFloat(counter.getAttribute('data-target'));
+                        let current = 0;
+                        const increment = target / 50;
+                        
+                        const updateCounter = () => {
+                            if (current < target) {
+                                current += increment;
+                                if (current > target) current = target;
+                                
+                                if (counter.getAttribute('data-target').includes('.')) {
+                                    counter.textContent = current.toFixed(2);
+                                } else {
+                                    counter.textContent = Math.floor(current).toLocaleString();
+                                }
+                                requestAnimationFrame(updateCounter);
+                            }
+                        };
+                        
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            }, { threshold: 0.15 });
+
+            counters.forEach(counter => observer.observe(counter));
+        };
+
+        // Demo: Toggle field functionality
+        function toggleField(btn, fieldId) {
+            btn.classList.toggle('active');
+            const field = document.getElementById(fieldId);
+            field.classList.toggle('blurred');
+            updateProof();
+        }
+
+        // Demo: Update proof display
+        function updateProof() {
+            const activeFields = document.querySelectorAll('.data-field:not(.blurred)');
+            const proofStatus = document.getElementById('proof-status');
+            const proofContent = document.getElementById('proof-content');
+
+            if (activeFields.length > 0) {
+                proofStatus.style.display = 'none';
+                proofContent.style.display = 'block';
+
+                // Generate a pseudo-random hash
+                const hashInput = Array.from(activeFields).map(f => f.textContent).join('');
+                let hash = '0x';
+                for (let i = 0; i < 16; i++) {
+                    hash += Math.floor(Math.random() * 16).toString(16);
+                }
+                hash += '...';
+                document.getElementById('proof-hash').textContent = hash;
+            } else {
+                proofStatus.style.display = 'block';
+                proofContent.style.display = 'none';
+            }
+        }
+
+        // Demo: Share proof
+        function shareProof() {
+            alert('Proof shared successfully! Recipients can verify without seeing your data.');
+        }
+
+        // Handle CTA form submission
+        function handleSignup(event) {
+            event.preventDefault();
+            const email = event.target.querySelector('input[type="email"]').value;
+            alert(`Welcome to EchoVault! We've sent a confirmation email to ${email}`);
+            event.target.reset();
+        }
+
+        // Initialize animations on page load
+        window.addEventListener('load', () => {
+            animateOnScroll();
+            animateCounters();
+        });
+
+        // Reinitialize scroll animations on resize
+        window.addEventListener('resize', animateOnScroll);
+    </script>
+</body>
+</html>
